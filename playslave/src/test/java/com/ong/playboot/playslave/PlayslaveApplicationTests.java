@@ -1,11 +1,10 @@
-package com.ong.playboot.playdata;
+package com.ong.playboot.playslave;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public
-class PlaydataApplicationTests {
+class PlayslaveApplicationTests {
 
     @Test
     void contextLoads() {

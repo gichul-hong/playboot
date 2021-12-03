@@ -1,2 +1,5 @@
 rootProject.name = 'playboot'
 include 'playdata'
+include 'playgate'
+include 'playslave'
+include 'playcommon'
