@@ -1,23 +1,40 @@
 package com.ong.playboot.playdata.service;
 
-import org.junit.jupiter.api.Assertions;
+import com.ong.playboot.playdata.model.LogBase;
+import com.ong.playboot.playdata.repository.LogBaseRepository;
+import com.ong.playboot.playdata.repository.LogDetailRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class LogBaseServiceTest {
 
-    @Autowired
-    LogBaseService logBaseService;
+    private LogBaseRepository logBaseRepository = Mockito.mock(LogBaseRepository.class);
+    private LogDetailRepository logDetailRepository = Mockito.mock(LogDetailRepository.class);
+    private LogService logService;
+
+    @BeforeEach
+    public void setup() {
+        logService = new LogService(logBaseRepository, logDetailRepository);
+    }
 
     @Test
     public void saveBaseLogTest () {
 
-        logBaseService.saveBaseLog("test message");
+        String message = "test message";
+
+        when(logBaseRepository.save(any(LogBase.class))).then(returnsFirstArg());
+        LogBase logbase = logService.saveBaseLog(message);
+
+        assertEquals(message, logbase.getMessage());
     }
+
 }
